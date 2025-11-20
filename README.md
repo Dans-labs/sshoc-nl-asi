@@ -28,7 +28,7 @@ LLMs are useful approach for summarizing the contents of a dataset in keywords, 
 
 ## Installation and Setup
 1. Make sure you have Python installed. 
-2. Clone this repository: INSERT LINK
+2. Clone this repository: `git@github.com:Dans-labs/shhoc-nl-asi.git`
 3. Navigate into the project directory: `cd repo`
 4. Install the dependencies: `pip install -r requirements.txt`
 5. Retrieve a User Access Token with at least Inference permissions from [huggingface](https://huggingface.co/settings/tokens)
