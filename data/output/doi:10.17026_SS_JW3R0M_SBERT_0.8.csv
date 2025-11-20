@@ -1,0 +1,13 @@
+DOI,Keyword,Matched Term,URI,Cosine Similarity,Num chars in metadata
+doi:10.17026/SS/JW3R0M,theology,theology,http://vocab.getty.edu/aat/300054313,1.0000002,877
+doi:10.17026/SS/JW3R0M,theology,theologians,http://vocab.getty.edu/aat/300025784,0.808438,877
+doi:10.17026/SS/JW3R0M,protestantism,Protestantism,http://vocab.getty.edu/aat/300073735,1.0000001,877
+doi:10.17026/SS/JW3R0M,religion,world religions,http://vocab.getty.edu/aat/300393253,0.80487573,877
+doi:10.17026/SS/JW3R0M,religion,philosophy of religion,http://vocab.getty.edu/aat/300054303,0.80072737,877
+doi:10.17026/SS/JW3R0M,19th century,nineteenth century (dates CE),http://vocab.getty.edu/aat/300404513,0.8621066,877
+doi:10.17026/SS/JW3R0M,19th century,nineteenth century BCE,http://vocab.getty.edu/aat/300404539,0.8596294,877
+doi:10.17026/SS/JW3R0M,university,universities (institutions),http://vocab.getty.edu/aat/300312240,0.85033166,877
+doi:10.17026/SS/JW3R0M,university,university colleges (institutions),http://vocab.getty.edu/aat/300448944,0.8349648,877
+doi:10.17026/SS/JW3R0M,social networking,social networking,http://vocab.getty.edu/aat/300312270,1.0000001,877
+doi:10.17026/SS/JW3R0M,communication,communications concepts,http://vocab.getty.edu/aat/300235701,0.8194734,877
+doi:10.17026/SS/JW3R0M,communication,communication functions,http://vocab.getty.edu/aat/300132471,0.81792647,877

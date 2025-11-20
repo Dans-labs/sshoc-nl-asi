@@ -1,0 +1,16 @@
+DOI,Keyword,Matched Term,URI,Cosine Similarity
+doi:10.17026/SS/R5XWCC,guide dog,guide terms,http://vocab.getty.edu/aat/300386700,0.65473086
+doi:10.17026/SS/R5XWCC,guide dog,guide letters,http://vocab.getty.edu/aat/300233692,0.63832843
+doi:10.17026/SS/R5XWCC,dog,puppies,http://vocab.getty.edu/aat/300265947,0.62347436
+doi:10.17026/SS/R5XWCC,working dog,ring dogs,http://vocab.getty.edu/aat/300024475,0.66227543
+doi:10.17026/SS/R5XWCC,textual representation,tactile representations,http://vocab.getty.edu/aat/300312232,0.8456967
+doi:10.17026/SS/R5XWCC,textual representation,sound reproducers,http://vocab.getty.edu/aat/300433437,0.8097391
+doi:10.17026/SS/R5XWCC,textual representation,electronic reproductions,http://vocab.getty.edu/aat/300263434,0.8096566
+doi:10.17026/SS/R5XWCC,textual representation,card reproducers,http://vocab.getty.edu/aat/300422663,0.8091598
+doi:10.17026/SS/R5XWCC,textual representation,tape reproducers,http://vocab.getty.edu/aat/300434381,0.807323
+doi:10.17026/SS/R5XWCC,art,printmaking,http://vocab.getty.edu/aat/300131119,0.60031575
+doi:10.17026/SS/R5XWCC,North‑Western Europe,Western European,http://vocab.getty.edu/aat/300386465,0.79692495
+doi:10.17026/SS/R5XWCC,North‑Western Europe,Eastern European,http://vocab.getty.edu/aat/300386466,0.79109955
+doi:10.17026/SS/R5XWCC,North‑Western Europe,Western Pueblo,http://vocab.getty.edu/aat/300017762,0.7233393
+doi:10.17026/SS/R5XWCC,North‑Western Europe,Western Shoshone,http://vocab.getty.edu/aat/300017576,0.7199814
+doi:10.17026/SS/R5XWCC,North‑Western Europe,Western Apache,http://vocab.getty.edu/aat/300017734,0.7190372

@@ -1,0 +1,7 @@
+DOI,Keyword,Matched Term,URI,Cosine Similarity
+doi:10.17026/SS/8TI9GR,interview,interviews,http://vocab.getty.edu/aat/300026392,0.9018265
+doi:10.17026/SS/8TI9GR,interview,interviewing,http://vocab.getty.edu/aat/300255438,0.8891148
+doi:10.17026/SS/8TI9GR,interview,interviewers,http://vocab.getty.edu/aat/300440748,0.84094715
+doi:10.17026/SS/8TI9GR,interview,interviewees,http://vocab.getty.edu/aat/300440749,0.8315878
+doi:10.17026/SS/8TI9GR,observation,observation,http://vocab.getty.edu/aat/300343797,0.99999994
+doi:10.17026/SS/8TI9GR,theme,theme,http://vocab.getty.edu/aat/300195523,1.0

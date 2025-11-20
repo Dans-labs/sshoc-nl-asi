@@ -1,0 +1,30 @@
+# Data
+data/aatc.ttl
+aatc_fasttext_lookup.pkl
+aatc_sbert_lookup.pkl
+
+# Models 
+models/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# VSCode
+.vscode
