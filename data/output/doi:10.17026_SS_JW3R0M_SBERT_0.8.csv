@@ -1,11 +1,8 @@
 DOI,Keyword,Matched Term,URI,Cosine Similarity,Num chars in metadata
-doi:10.17026/SS/JW3R0M,protestantism,Protestantism,http://vocab.getty.edu/aat/300073735,1.0000001,877
-doi:10.17026/SS/JW3R0M,theology,theology,http://vocab.getty.edu/aat/300054313,1.0000002,877
-doi:10.17026/SS/JW3R0M,theology,theologians,http://vocab.getty.edu/aat/300025784,0.808438,877
-doi:10.17026/SS/JW3R0M,prussia,Prussian,http://vocab.getty.edu/aat/300386496,0.848168,877
-doi:10.17026/SS/JW3R0M,19th century,nineteenth century (dates CE),http://vocab.getty.edu/aat/300404513,0.8621066,877
-doi:10.17026/SS/JW3R0M,19th century,nineteenth century BCE,http://vocab.getty.edu/aat/300404539,0.8596294,877
-doi:10.17026/SS/JW3R0M,communication,communications concepts,http://vocab.getty.edu/aat/300235701,0.8194734,877
-doi:10.17026/SS/JW3R0M,communication,communication functions,http://vocab.getty.edu/aat/300132471,0.81792647,877
+doi:10.17026/SS/JW3R0M,protestant theology,Protestantism,http://vocab.getty.edu/aat/300073735,0.8199424,877
 doi:10.17026/SS/JW3R0M,german language,German (language),http://vocab.getty.edu/aat/300388344,0.95674014,877
 doi:10.17026/SS/JW3R0M,german language,Standard German (language),http://vocab.getty.edu/aat/300389318,0.8254429,877
+doi:10.17026/SS/JW3R0M,academic faculty,faculty (educators),http://vocab.getty.edu/aat/300417550,0.8115242,877
+doi:10.17026/SS/JW3R0M,religious association,religious organizations,http://vocab.getty.edu/aat/300250844,0.8207773,877
+doi:10.17026/SS/JW3R0M,prussia,Prussian,http://vocab.getty.edu/aat/300386496,0.848168,877
+doi:10.17026/SS/JW3R0M,german-speaking,German (language),http://vocab.getty.edu/aat/300388344,0.8241707,877
