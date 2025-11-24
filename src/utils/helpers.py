@@ -141,3 +141,15 @@ def return_closest_term(config, keyword_embedding, term_embeddings, terms):
     return matched_terms_with_uris, cosines
 
     
+def get_stats():
+    """
+    Get statistics about the keyword matching request in a .csv file. 
+    It contains the following info: 
+    - dataset DOI 
+    - runtime 
+    - cosine threshold 
+    - embeddings model 
+    - LLM 
+
+    """ 
+    pass

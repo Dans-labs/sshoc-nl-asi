@@ -23,7 +23,7 @@ prompts:
 
 format_output: 
   base_path : "data/output/{doi}_{method}_{cosine}.csv"  
-  output_mode: verbose # options: "verbose" and "brief"
+  output_mode: experimental # options: "experimental" and "compact"
 
 
 embeddings:

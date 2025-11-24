@@ -80,14 +80,14 @@ def main():
     if keyword_embeddings:
         logging.info("Matching keywords to controlled vocabulary terms...")
         closest_matches, cosines = match_keywords_to_terms.run(config, keyword_embeddings)
-        #logging.info(f"Closest matched terms: {closest_matches}")
-        #logging.info(f"Cosine similarities: {cosines}")
 
 
     # Task 5: Format output
     if metadata_output and keywords and closest_matches:
         metadata_length = len(metadata_output)
         formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length)
+        
+
         #logging.info("Formatted Output:")
         logging.info(formatted_output)
 
