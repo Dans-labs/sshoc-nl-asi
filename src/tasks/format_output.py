@@ -5,7 +5,8 @@ def run(config, keywords, matched_terms, cosines, metadata_length):
     
     """
     Format the output of the pipeline into a csv with the columns [DOI, Keyword, Matched Term, URI, Cosine Similarity]
-
+    
+    
     Input: 
     - doi: the DOI of the publication
     - keywords: list of generated keywords
@@ -20,64 +21,39 @@ def run(config, keywords, matched_terms, cosines, metadata_length):
     cosine_threshold = config["match_keywords_to_terms"]["cosine_threshold"]
     matching_method = config["match_keywords_to_terms"]["matching_method"]
 
-    # #Print formatted output
-    # for i, term_list in enumerate(matched_terms):
-    #     print(f"Keyword: {keywords[i]}")
-    #     for term, uri in term_list:
-    #         print(f"  Matched Term: {term} | URI: {uri}")
-    #     print("\n")
-
-
-    #if matching_method == "closest":
-    # Create a dataframe to hold the formatted output
-
-    # print(matched_terms)
-    # data = []
-    # for i, keyword in enumerate(keywords):
-    #     print(f"Keyword: {keyword}")
-        # term, uri= matched_terms[i]
-        # cosine = cosines[i]
-        # data.append({
-        #     "DOI": doi,
-        #     "Keyword": keyword,
-        #     "Matched Term": term,
-        #     "URI": uri,
-        #     "Cosine Similarity": cosine, 
-        #     "Num chars in metadata" : metadata_length
-        # })
-
-
 
     data = []
-    for keyword, matches, cosine in zip(keywords, matched_terms, cosines):
-        # each `matches` is a list with exactly one (term, uri) tuple
-        term, uri = matches[0]
 
-        data.append({
-            "DOI": doi,
-            "Keyword": keyword,
-            "Matched Term": term,
-            "URI": uri,
-            "Cosine Similarity": float(cosine),   # convert np.float32 → Python float
-            "Num chars in metadata": metadata_length
-        })
-        
-    # print("keywords:", keywords)
-    # print( "matched_terms:", matched_terms)
-    # print("cosines:", cosines)
+    if matching_method == "closest":
+        for keyword, matches, cosine in zip(keywords, matched_terms, cosines):
+            # each `matches` is a list with exactly one (term, uri) tuple
+            term, uri = matches[0]
 
-    # # # Create a DataFrame to hold the formatted output
-    # data = []
-    # for i, keyword in enumerate(keywords):
-    #     for (term, uri), cosine in zip(matched_terms[i], cosines[i]):
-    #         data.append({
-    #             "DOI": doi,
-    #             "Keyword": keyword,
-    #             "Matched Term": term,
-    #             "URI": uri,
-    #             "Cosine Similarity": cosine, 
-    #             "Num chars in metadata" : metadata_length
-    #         })
+            data.append({
+                "DOI": doi,
+                "Keyword": keyword,
+                "Matched Term": term,
+                "URI": uri,
+                "Cosine Similarity": float(cosine),   # convert np.float32 → Python float
+                "Num chars in metadata": metadata_length
+            })
+
+
+    if matching_method == "top_n":        
+        for i, keyword in enumerate(keywords):
+            for (term, uri), cosine in zip(matched_terms[i], cosines[i]):
+                data.append({
+                    "DOI": doi,
+                    "Keyword": keyword,
+                    "Matched Term": term,
+                    "URI": uri,
+                    "Cosine Similarity": float(cosine), 
+                    "Num chars in metadata" : metadata_length
+                })
+
+
+
+
 
     # # Create a DataFrame from the collected data
     df = pd.DataFrame(data)
