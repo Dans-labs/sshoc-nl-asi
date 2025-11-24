@@ -30,7 +30,7 @@ LLMs are useful approach for summarizing the contents of a dataset in keywords, 
 1. Make sure you have Python installed. 
 2. Clone this repository: `git clone git@github.com:Dans-labs/shhoc-nl-asi.git`
 3. Navigate into the project directory: `cd repo`
-4. Install the dependencies: `pip install -r requirements.txt`
+4. Install the dependencies: `pip install -r requirements.txt`. This may take several minutes. 
 5. Retrieve a User Access Token with at least Inference permissions from [huggingface](https://huggingface.co/settings/tokens)
 2. Add the token to your environment by running `export MY_API_KEY="your-key-here"` in your terminal. 
 3. Download the flat representation of AAT concepts [here](https://github.com/DANS-KNAW/Getty-AAT-Concepts/blob/main/aatc.ttl) (keep the name `aatc.ttl`), place it in the `data` folder. 

@@ -12,6 +12,8 @@ generate_keywords:
 
 match_keywords_to_terms:
   cosine_threshold: 0.8
+  matching_method: closest # options: "closest" or "top_n"
+
 
 prompts: 
   generate_keywords: |
@@ -21,6 +23,7 @@ prompts:
 
 format_output: 
   base_path : "data/output/{doi}_{method}_{cosine}.csv"  
+  output_mode: verbose # options: "verbose" and "brief"
 
 
 embeddings:

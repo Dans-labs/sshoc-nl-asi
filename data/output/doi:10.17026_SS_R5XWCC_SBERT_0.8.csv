@@ -1,4 +1,5 @@
 DOI,Keyword,Matched Term,URI,Cosine Similarity,Num chars in metadata
-doi:10.17026/SS/R5XWCC,guide dogs,doges,http://vocab.getty.edu/aat/300025463,0.8689278364181519,388
-doi:10.17026/SS/R5XWCC,dogs,technical illustrations (images),http://vocab.getty.edu/aat/300124063,0.8614198565483093,388
-doi:10.17026/SS/R5XWCC,illustrated manuscripts,Late Medieval,http://vocab.getty.edu/aat/300111307,0.864121675491333,388
+doi:10.17026/SS/R5XWCC,dog,doges,http://vocab.getty.edu/aat/300025463,0.8367797136306763,388
+doi:10.17026/SS/R5XWCC,dog training,Late Medieval,http://vocab.getty.edu/aat/300111307,0.9295505285263062,388
+doi:10.17026/SS/R5XWCC,companion animal,manuscripts (documents),http://vocab.getty.edu/aat/300028569,0.8315550088882446,388
+doi:10.17026/SS/R5XWCC,medieval,extra-illustration,http://vocab.getty.edu/aat/300257232,0.8299281597137451,388
