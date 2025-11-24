@@ -7,3 +7,5 @@ evaluation_dataset = pd.read_csv('evaluation_dataset.csv')
 dois = evaluation_dataset['doi'].tolist()
 
 # Input into pipeline 
+for doi in dois:
+    

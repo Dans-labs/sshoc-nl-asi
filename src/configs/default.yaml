@@ -2,10 +2,10 @@
 
 
 doi_to_md:
-  #doi: doi:10.17026/SS/R5XWCC
+  doi: doi:10.17026/SS/R5XWCC
   #doi: doi:10.17026/SS/8TI9GR
   #doi: doi:10.17026/SS/VWPJD5 
-  doi: doi:10.17026/SS/JW3R0M
+  #doi: doi:10.17026/SS/JW3R0M
   base_url: https://ssh.datastations.nl/api/datasets/export?exporter=OAI_ORE&persistentId=
 
 generate_keywords:
@@ -14,7 +14,8 @@ generate_keywords:
   api_url: https://router.huggingface.co/v1/chat/completions
 
 match_keywords_to_terms:
-  cosine_threshold: 0.6
+  cosine_threshold: 0.8
+  matching_method: "closest" # options: "closest" or "top_n"
 
 prompts: 
   generate_keywords: |
