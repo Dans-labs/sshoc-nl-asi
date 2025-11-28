@@ -1,5 +1,6 @@
 
 import pandas as pd
+import os 
 
 def run(config, keywords, matched_terms, cosines, metadata_length, metadata_output): 
     
@@ -22,12 +23,10 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
     matching_method = config["match_keywords_to_terms"]["matching_method"]
 
 
+    # Aggregate data for all keywords
+
     aggregated_data = []
 
-
-    # print("keywords:", keywords, len(keywords))
-    # print("matched_terms:", matched_terms, len(matched_terms))
-    # print("cosines:", cosines, len(cosines))
 
     if matching_method == "closest":
         for keyword, matches, cosine in zip(keywords, matched_terms, cosines):
@@ -59,17 +58,43 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
                     })
 
 
-
-
     # Create a DataFrame from the collected data
-    df = pd.DataFrame(aggregated_data)
+    aggregated_df = pd.DataFrame(aggregated_data)
 
-    # Save the DataFrame to a CSV file
-    base_path = config["format_output"]["base_path"]
-    output_path = base_path.replace("{doi}", doi.replace("/", "_"))
-    output_path = output_path.replace("{method}", method)
-    output_path = output_path.replace("{cosine}", str(cosine_threshold))
+    # Check if the output file already exists
+    base_path_agg = config["format_output"]["base_path_keywords_aggregated"]
+    output_path_agg = base_path_agg.replace("{method}", method)
 
-    df.to_csv(output_path, index=False)
 
-    return {"status": "success", "output_file": output_path}
+    if os.path.exists(output_path_agg):
+        aggregated_df.to_csv(output_path_agg, mode='a', header=False, index=False)
+    else:
+        aggregated_df.to_csv(output_path_agg, index=False)
+
+    
+    ## Save run info
+    run_info = {
+        "DOI": [doi],
+        "Number of Metadata Characters": [metadata_length],
+        "Number of Matched Terms": [len(aggregated_data)],
+        "Matching Method": [matching_method],
+        "Cosine Similarity Threshold": [cosine_threshold],
+        "Embedding Method": [method],
+        "LLM Model": [config["generate_keywords"]["model"]]
+    }
+
+    run_info_df = pd.DataFrame(run_info)
+    base_path_run = config["format_output"]["base_path_run_info"]
+    output_path_run = base_path_run.replace("{doi}", doi.replace("/", "_"))
+
+    run_info_df.to_csv(output_path_run, index=False)
+
+
+    # # Save the DataFrame to a CSV file
+    # base_path = config["format_output"]["base_path"]
+    # output_path = base_path.replace("{doi}", doi.replace("/", "_"))
+    # output_path = output_path.replace("{method}", method)
+    # output_path = output_path.replace("{cosine}", str(cosine_threshold))
+
+
+    return {"status": "success"}

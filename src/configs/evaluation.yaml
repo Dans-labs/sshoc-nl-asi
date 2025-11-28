@@ -22,7 +22,8 @@ prompts:
     Dataset description: {metadata}
 
 format_output: 
-  base_path : "data/output/{doi}_{method}_{cosine}.csv"  
+  base_path_run_info : "data/output/run_info_{doi}.csv"  
+  base_path_keywords_aggregated: "data/output/aggregated_keywords_{method}.csv"
   output_mode: experimental # options: "experimental" and "compact"
 
 
