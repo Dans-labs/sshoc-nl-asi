@@ -5,7 +5,7 @@ import yaml
 import logging 
 
 #from .tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms
-from tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
+from src.tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
 # Configure logging 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -27,7 +27,14 @@ def main():
         default="src/configs/evaluation.yaml", 
         help="Path to the configuration YAML file."
     )
+    parser.add_argument(
+        "--doi",
+        type=str,
+        help="DOI to process."
+    )
     args = parser.parse_args()
+
+    doi = args.doi
 
     # Load config 
     config = load_config(args.config)
@@ -37,7 +44,7 @@ def main():
     logging.info("Starting pipeline...")
 
     # Task 1: DOI to Metadata
-    metadata_output = doi_to_md.run(config)
+    metadata_output = doi_to_md.run(config, doi)
     if metadata_output:
         print("\n=== METADATA OUTPUT ===")
         print(metadata_output)
@@ -85,7 +92,7 @@ def main():
     # Task 5: Format output
     if metadata_output and keywords and closest_matches:
         metadata_length = len(metadata_output)
-        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output)
+        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output, doi)
         
 
         #logging.info("Formatted Output:")
@@ -93,6 +100,8 @@ def main():
 
 
     logging.info("Pipeline completed.")
+    logging.info("===================================")
+    print("\n")
 
 
 if __name__ == "__main__":

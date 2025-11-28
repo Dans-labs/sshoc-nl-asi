@@ -2,7 +2,7 @@
 import pandas as pd
 import os 
 
-def run(config, keywords, matched_terms, cosines, metadata_length, metadata_output): 
+def run(config, keywords, matched_terms, cosines, metadata_length, metadata_output, doi): 
     
     """
     Format the output of the pipeline into a csv with the columns [DOI, Keyword, Matched Term, URI, Cosine Similarity]
@@ -17,7 +17,7 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
     - formatted_output: a dictionary containing the DOI, keywords, and matched terms with URIs
     """
 
-    doi = config["doi_to_md"]["doi"]
+    #doi = config["doi_to_md"]["doi"]
     method = config["embeddings"]["method"]
     cosine_threshold = config["match_keywords_to_terms"]["cosine_threshold"]
     matching_method = config["match_keywords_to_terms"]["matching_method"]

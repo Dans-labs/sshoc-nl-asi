@@ -11,11 +11,11 @@ import requests
 import logging
 
 
-def run(config): 
+def run(config, doi): 
 
     logging.info("Fetching metadata from DOI...")
 
-    doi = config['doi_to_md']['doi']
+    #doi = config['doi_to_md']['doi']
     base_url = config["doi_to_md"]["base_url"]
 
     # Format DOI for URL

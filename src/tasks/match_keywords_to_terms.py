@@ -9,7 +9,7 @@ Output: matched terms for each keyword based on highest similarity as a txt file
 import logging 
 import pickle
 import numpy as np
-from utils.helpers import return_closest_term, return_top_n_terms
+from src.utils.helpers import return_closest_term, return_top_n_terms
 
 
 

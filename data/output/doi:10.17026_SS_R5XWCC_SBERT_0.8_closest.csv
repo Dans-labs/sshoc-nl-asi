@@ -1,8 +1,0 @@
-DOI,Keyword,Matched Term,URI,Cosine Similarity,Num chars in metadata
-doi:10.17026/SS/R5XWCC,dog,doges,http://vocab.getty.edu/aat/300025463,0.8367797136306763,388
-doi:10.17026/SS/R5XWCC,guide dog,Late Medieval,http://vocab.getty.edu/aat/300111307,0.864121675491333,388
-doi:10.17026/SS/R5XWCC,medieval period,Medieval (European),http://vocab.getty.edu/aat/300020756,0.9385477900505066,388
-doi:10.17026/SS/R5XWCC,medieval europe,northwest,http://vocab.getty.edu/aat/300078812,0.821052610874176,388
-doi:10.17026/SS/R5XWCC,northwest europe,extra-illustration,http://vocab.getty.edu/aat/300257232,0.8299281597137451,388
-doi:10.17026/SS/R5XWCC,illustration,illustrated books,http://vocab.getty.edu/aat/300311820,0.8568019866943359,388
-doi:10.17026/SS/R5XWCC,book illustration,art for art's sake,http://vocab.getty.edu/aat/300178591,0.9070736169815063,388

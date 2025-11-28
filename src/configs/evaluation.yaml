@@ -2,7 +2,7 @@
 
 
 doi_to_md:
-  doi: doi:10.17026/SS/JW3R0M
+  #doi: doi:10.17026/SS/JW3R0M
   base_url: https://ssh.datastations.nl/api/datasets/export?exporter=OAI_ORE&persistentId=
 
 generate_keywords:
