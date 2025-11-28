@@ -95,7 +95,7 @@ def return_top_n_terms(config, keyword_embeddings, term_embeddings, terms, n=5):
 
     return matched_terms_with_uris, cosines
 
-def return_closest_term(config, keyword_embedding, term_embeddings, terms):
+def return_closest_term(keyword_embedding, term_embeddings, terms):
 
     """
     Use matching_method = "closest" to return the closest term for each keyword embedding

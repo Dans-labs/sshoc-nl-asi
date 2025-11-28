@@ -87,7 +87,10 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
     base_path_run = config["format_output"]["base_path_run_info"]
     output_path_run = base_path_run.replace("{doi}", doi.replace("/", "_"))
 
-    run_info_df.to_csv(output_path_run, index=False)
+    if os.path.exists(output_path_run):
+        run_info_df.to_csv(output_path_run, mode='a', header=False, index=False)
+    else:
+        run_info_df.to_csv(output_path_run, index=False)
 
 
     # # Save the DataFrame to a CSV file

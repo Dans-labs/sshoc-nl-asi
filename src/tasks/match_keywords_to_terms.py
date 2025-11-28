@@ -30,7 +30,7 @@ def run(config, keyword_embeddings):
 
     if matching_method == "closest":
         logging.info("Using 'closest' matching method...")
-        matched_terms_with_uris, cosines = return_closest_term(config, keyword_embeddings, term_embeddings, terms)
+        matched_terms_with_uris, cosines = return_closest_term(keyword_embeddings, term_embeddings, terms)
 
     if matching_method == "top_n":
         logging.info("Using 'top_n' matching method...")
