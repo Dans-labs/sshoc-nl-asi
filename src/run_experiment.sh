@@ -36,4 +36,6 @@ while IFS= read -r DOI; do
     else
         echo "Finished processing DOI: $DOI"
     fi
+
+    sleep 2
 done < "$DOI_FILE"

@@ -31,6 +31,8 @@ def run(config, metadata):
     # Format prompt with metadata
     prompt = prompt_template.replace("{metadata}", metadata)
 
+    
+
     # Set up Hugging Face APi
 
     headers = {

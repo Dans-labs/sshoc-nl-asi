@@ -4,6 +4,11 @@ import argparse
 import yaml
 import logging 
 
+import time
+
+start = time.perf_counter()
+
+
 #from .tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms
 from src.tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
 # Configure logging 
@@ -88,15 +93,17 @@ def main():
         logging.info("Matching keywords to controlled vocabulary terms...")
         closest_matches, cosines = match_keywords_to_terms.run(config, keyword_embeddings)
 
+    elapsed = time.perf_counter() - start
 
     # Task 5: Format output
     if metadata_output and keywords and closest_matches:
         metadata_length = len(metadata_output)
-        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output, doi)
+        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output, doi, elapsed)
         
 
         #logging.info("Formatted Output:")
         logging.info(formatted_output)
+
 
 
     logging.info("Pipeline completed.")

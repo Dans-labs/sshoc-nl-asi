@@ -2,8 +2,8 @@
 import pandas as pd
 import os 
 
-def run(config, keywords, matched_terms, cosines, metadata_length, metadata_output, doi): 
-    
+def run(config, keywords, matched_terms, cosines, metadata_length, metadata_output, doi, elapsed): 
+
     """
     Format the output of the pipeline into a csv with the columns [DOI, Keyword, Matched Term, URI, Cosine Similarity]
     
@@ -80,7 +80,8 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
         "Matching Method": [matching_method],
         "Cosine Similarity Threshold": [cosine_threshold],
         "Embedding Method": [method],
-        "LLM Model": [config["generate_keywords"]["model"]]
+        "LLM Model": [config["generate_keywords"]["model"]],
+        "Runtime (seconds)": [elapsed]
     }
 
     run_info_df = pd.DataFrame(run_info)

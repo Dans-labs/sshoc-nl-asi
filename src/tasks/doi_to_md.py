@@ -11,6 +11,7 @@ import requests
 import logging
 
 
+
 def run(config, doi): 
 
     logging.info("Fetching metadata from DOI...")
@@ -37,37 +38,54 @@ def run(config, doi):
     try:
         title = metadata["ore:describes"]["title"]
         if isinstance(metadata["ore:describes"]["citation:dsDescription"], list):
-            description = " ".join([desc["citation:dsDescriptionValue"] for desc in metadata["ore:describes"]["citation:dsDescription"]])
+            description = " ".join([desc["citation:dsDescriptionValue"].strip("<p>").strip("</p>") for desc in metadata["ore:describes"]["citation:dsDescription"]])
         else:
             description = metadata["ore:describes"]["citation:dsDescription"]["citation:dsDescriptionValue"]
+            description = description.strip("<p>").strip("</p>")
     except KeyError as e:
         logging.error(f"Missing expected metadata fields: {e}")
-        return None
+        return ""
+    
 
-    # Extract keywords
-    def extract_keywords(metadata):
+    # Extract notes 
+    try: 
+        notes = metadata["ore:describes"]["citation:notesText"]
+    except KeyError:
+        notes = ""
 
-        try: 
-            keywords = metadata["ore:describes"]["citation:keyword"]
-            # extract all keywords as a string, seperated by commas
-            if isinstance(keywords, list):
-                keywords = [kw["citation:keywordValue"] for kw in keywords]
-            else:
-                keywords = [keywords["citation:keywordValue"]]
-            return ", ".join(keywords)
 
-        except KeyError:
-            logging.info("No keywords found in metadata.")
-            return None
+    # Extract series 
+    try: 
+        series = metadata["ore:describes"]["citation:series"]["citation:seriesInformation"]
+        series = series.strip("<p>").strip("</p>")
+    except KeyError:
+        series = ""
 
-   # keywords = extract_keywords(metadata)
-    keywords = None
 
-    # Combine all parts 
-    if keywords:    
-        metadata_output = f"{title}; {description}; Keywords: {keywords}"
-    else:
-        metadata_output = f"{title}; {description}"
+    # # Extract keywords
+    # def extract_keywords(metadata):
+
+    #     try: 
+    #         keywords = metadata["ore:describes"]["citation:keyword"]
+    #         # extract all keywords as a string, seperated by commas
+    #         if isinstance(keywords, list):
+    #             keywords = [kw["citation:keywordValue"] for kw in keywords]
+    #         else:
+    #             keywords = [keywords["citation:keywordValue"]]
+    #         return ", ".join(keywords)
+
+    #     except KeyError:
+    #         logging.info("No keywords found in metadata.")
+    #         return None
+
+    metadata_output = f"{title} {description} {notes}"
+
+    # if notes is not None:
+    #     metadata_output = f"{title} {description} {notes}"
+    # elif series is not None:
+    #     metadata_output = f"{title} {description} {series}"
+    # else:
+    #     metadata_output = f"{title} {description}"
 
     logging.info("Metadata fetched successfully.")
     return metadata_output

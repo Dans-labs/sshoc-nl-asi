@@ -7,8 +7,9 @@ doi_to_md:
 
 generate_keywords:
   api_key: MY_API_KEY
-  model: "openai/gpt-oss-20b:groq"
+  #model: "openai/gpt-oss-20b:groq"
   api_url: https://router.huggingface.co/v1/chat/completions
+  model: "openai/gpt-oss-120b"
 
 match_keywords_to_terms:
   cosine_threshold: 0.8
@@ -17,7 +18,7 @@ match_keywords_to_terms:
 
 prompts: 
   generate_keywords: |
-    Instruction: Select up to 10 terms from the Getty AAT (https://vocab.getty.edu/aat/) that summarize the contents of the dataset description below. Only choose terms that are present in the AAT.
+    Instruction: Select 7 terms from the Getty AAT (https://vocab.getty.edu/aat/) that summarize the contents of the dataset description below. Only choose terms that are present in the AAT.
     Format: Please format your output as follows: 'name_term_1, name_term_2, name_term_3, name_term_4, name_term_5'
     Dataset description: {metadata}
 
