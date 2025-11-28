@@ -101,10 +101,11 @@ def return_closest_term(config, keyword_embedding, term_embeddings, terms):
     Use matching_method = "closest" to return the closest term for each keyword embedding
     based on cosine similarity above a certain threshold.
     """
+
     matched_terms = []
     cosines = []
 
-    cosine_threshold = config["match_keywords_to_terms"]["cosine_threshold"]
+    #cosine_threshold = config["match_keywords_to_terms"]["cosine_threshold"]
 
     # find the closest term for each keyword embedding. return them and their cosine similarity scores
     for kw_emb in keyword_embedding:
@@ -114,9 +115,8 @@ def return_closest_term(config, keyword_embedding, term_embeddings, terms):
         top_term = terms[top_index]
         top_cosine = similarities[0][top_index]
 
-        if top_cosine >= cosine_threshold:
-            matched_terms.append(top_term)
-            cosines.append(top_cosine)
+        matched_terms.append(top_term)
+        cosines.append(top_cosine)
 
 
     

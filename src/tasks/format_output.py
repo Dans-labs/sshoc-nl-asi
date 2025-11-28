@@ -1,7 +1,7 @@
 
 import pandas as pd
 
-def run(config, keywords, matched_terms, cosines, metadata_length): 
+def run(config, keywords, matched_terms, cosines, metadata_length, metadata_output): 
     
     """
     Format the output of the pipeline into a csv with the columns [DOI, Keyword, Matched Term, URI, Cosine Similarity]
@@ -22,41 +22,47 @@ def run(config, keywords, matched_terms, cosines, metadata_length):
     matching_method = config["match_keywords_to_terms"]["matching_method"]
 
 
-    data = []
+    aggregated_data = []
+
+
+    # print("keywords:", keywords, len(keywords))
+    # print("matched_terms:", matched_terms, len(matched_terms))
+    # print("cosines:", cosines, len(cosines))
 
     if matching_method == "closest":
         for keyword, matches, cosine in zip(keywords, matched_terms, cosines):
-            # each `matches` is a list with exactly one (term, uri) tuple
-            term, uri = matches[0]
+            if cosine >= cosine_threshold:
+                # each `matches` is a list with exactly one (term, uri) tuple
+                term, uri = matches[0]
 
-            data.append({
-                "DOI": doi,
-                "Keyword": keyword,
-                "Matched Term": term,
-                "URI": uri,
-                "Cosine Similarity": float(cosine),   # convert np.float32 → Python float
-                "Num chars in metadata": metadata_length
-            })
+                aggregated_data.append({
+                    "DOI": doi,
+                    "Metadata": metadata_output,
+                    "Keyword": keyword,
+                    "Matched Term": term,
+                    "URI": uri,
+                    "Cosine Similarity": float(cosine),   
+                })
 
 
     if matching_method == "top_n":        
         for i, keyword in enumerate(keywords):
             for (term, uri), cosine in zip(matched_terms[i], cosines[i]):
-                data.append({
-                    "DOI": doi,
-                    "Keyword": keyword,
-                    "Matched Term": term,
-                    "URI": uri,
-                    "Cosine Similarity": float(cosine), 
-                    "Num chars in metadata" : metadata_length
-                })
+                if cosine >= cosine_threshold:
+                    aggregated_data.append({
+                        "DOI": doi,
+                        "Metadata": metadata_output,
+                        "Keyword": keyword,
+                        "Matched Term": term,
+                        "URI": uri,
+                        "Cosine Similarity": float(cosine), 
+                    })
 
 
 
 
-
-    # # Create a DataFrame from the collected data
-    df = pd.DataFrame(data)
+    # Create a DataFrame from the collected data
+    df = pd.DataFrame(aggregated_data)
 
     # Save the DataFrame to a CSV file
     base_path = config["format_output"]["base_path"]

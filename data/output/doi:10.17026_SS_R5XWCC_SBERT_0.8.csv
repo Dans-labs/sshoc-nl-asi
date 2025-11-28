@@ -1,8 +1,0 @@
-DOI,Keyword,Matched Term,URI,Cosine Similarity,Num chars in metadata
-doi:10.17026/SS/R5XWCC,dog,doges,http://vocab.getty.edu/aat/300025463,0.8367797136306763,388
-doi:10.17026/SS/R5XWCC,manuscript,manuscripts (documents),http://vocab.getty.edu/aat/300028569,0.8315550088882446,388
-doi:10.17026/SS/R5XWCC,illustration,extra-illustration,http://vocab.getty.edu/aat/300257232,0.8299281597137451,388
-doi:10.17026/SS/R5XWCC,north-western europe,Western European,http://vocab.getty.edu/aat/300386465,0.8450703024864197,388
-doi:10.17026/SS/R5XWCC,north-western europe,Northern European,http://vocab.getty.edu/aat/300386462,0.8018488883972168,388
-doi:10.17026/SS/R5XWCC,medieval europe,Medieval (European),http://vocab.getty.edu/aat/300020756,0.9385477900505066,388
-doi:10.17026/SS/R5XWCC,medieval europe,Late Medieval,http://vocab.getty.edu/aat/300111307,0.8072642087936401,388

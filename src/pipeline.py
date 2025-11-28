@@ -24,7 +24,7 @@ def main():
     parser.add_argument(
         "--config", 
         type=str, 
-        default="src/configs/default.yaml", 
+        default="src/configs/evaluation.yaml", 
         help="Path to the configuration YAML file."
     )
     args = parser.parse_args()
@@ -85,7 +85,7 @@ def main():
     # Task 5: Format output
     if metadata_output and keywords and closest_matches:
         metadata_length = len(metadata_output)
-        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length)
+        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output)
         
 
         #logging.info("Formatted Output:")
