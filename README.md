@@ -11,12 +11,15 @@ Current status: prototype, in active development.
   - [Usage](#usage)
   - [Configuration](#configuration)
   - [File Strcture](#file-strcture)
+  - [License](#license)
 
 
 ## Method
 The task consist of two main components: 
 - Summarizing the content of the dataset with keywords 
-- Entity linking: linking the generated keywords to controlled vocabulary terms with resolvable URIs.
+- Entity linking: linking the generated keywords to controlled vocabulary terms with resolvable URIs. 
+
+<!-- TO DO: Add method visualization here -->
 
 The controlled vocabulary that is currently used is a [flat representation](https://github.com/DANS-KNAW/Getty-AAT-Concepts/tree/main) of the Getty Art & Architecture Thesaurus (AAT). 
 
@@ -52,3 +55,6 @@ You can customize the following settings in `src/configs/default.yaml`:
 
 ## File Strcture
 
+
+## License 
+<!-- TO DO: add license info here-->
