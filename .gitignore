@@ -2,6 +2,7 @@
 data/aatc.ttl
 aatc_fasttext_lookup.pkl
 aatc_sbert_lookup.pkl
+dois_for_asi_test1.txt
 
 # Models 
 models/

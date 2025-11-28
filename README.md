@@ -51,6 +51,7 @@ You can customize the following settings in `src/configs/default.yaml`:
 - The cosine threshold: only keyword-term pairs with a cosine similarity score higher than this number are added to the output file. 
 - The prompt for keyword generation
 - The embeddings method. The options are SentenceBERT and fasttext, with the former outperforming the latter. More models can be added, but note that a lookup dictionary should be created as well. 
+- The keyword matching method. The options are 'closest' or 'top_n'. 'closest' retrieves only the single closest keyword-term pair, while 'top_n' allows you to specify the number of terms to be returned (as long as their cosine similarity is higher than the threshold.)
 
 
 ## File Strcture
