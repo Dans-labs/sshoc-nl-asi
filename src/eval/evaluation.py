@@ -8,4 +8,6 @@ dois = evaluation_dataset['doi'].tolist()
 
 # Input into pipeline 
 for doi in dois:
-    
+    pass
+
+

@@ -19,10 +19,15 @@ def run(config, doi):
     #doi = config['doi_to_md']['doi']
     base_url = config["doi_to_md"]["base_url"]
 
+    logging.info(f"Using DOI: {doi}")
+
     # Format DOI for URL
     doi_encoded = doi.replace(":", "%3A")
+    logging.info(f"Encoded DOI: {doi_encoded}")
     metadata_url = f"{base_url}{doi_encoded}"
-    logging.debug(f"Metadata URL: {metadata_url}")
+    logging.info(f"Metadata URL: {metadata_url}")
+
+    logging.info("Requesting metadata from API...")
 
     # Get metadata from API
     try:  
@@ -39,27 +44,29 @@ def run(config, doi):
         title = metadata["ore:describes"]["title"]
         if isinstance(metadata["ore:describes"]["citation:dsDescription"], list):
             description = " ".join([desc["citation:dsDescriptionValue"].strip("<p>").strip("</p>") for desc in metadata["ore:describes"]["citation:dsDescription"]])
+            description = description.replace("\n", "")
         else:
             description = metadata["ore:describes"]["citation:dsDescription"]["citation:dsDescriptionValue"]
             description = description.strip("<p>").strip("</p>")
+            description = description.replace("\n", "")
     except KeyError as e:
         logging.error(f"Missing expected metadata fields: {e}")
         return ""
     
 
-    # Extract notes 
-    try: 
-        notes = metadata["ore:describes"]["citation:notesText"]
-    except KeyError:
-        notes = ""
+    # # Extract notes 
+    # try: 
+    #     notes = metadata["ore:describes"]["citation:notesText"]
+    # except KeyError:
+    #     notes = ""
 
 
-    # Extract series 
-    try: 
-        series = metadata["ore:describes"]["citation:series"]["citation:seriesInformation"]
-        series = series.strip("<p>").strip("</p>")
-    except KeyError:
-        series = ""
+    # # Extract series 
+    # try: 
+    #     series = metadata["ore:describes"]["citation:series"]["citation:seriesInformation"]
+    #     series = series.strip("<p>").strip("</p>")
+    # except KeyError:
+    #     series = ""
 
 
     # # Extract keywords
@@ -78,7 +85,7 @@ def run(config, doi):
     #         logging.info("No keywords found in metadata.")
     #         return None
 
-    metadata_output = f"{title} {description} {notes}"
+    metadata_output = f"{title} {description}"
 
     # if notes is not None:
     #     metadata_output = f"{title} {description} {notes}"

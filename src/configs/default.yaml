@@ -2,10 +2,13 @@
 
 
 doi_to_md:
-  doi: doi:10.17026/SS/R5XWCC
+  #doi: doi:10.17026/SS/R5XWCC
   #doi: doi:10.17026/SS/8TI9GR
   #doi: doi:10.17026/SS/VWPJD5 
   #doi: doi:10.17026/SS/JW3R0M
+  #doi: doi:10.17026/dans-xdr-dssq
+  #doi: doi:10.17026/dans-2ak-kb6g
+  doi: doi:10.17026/SS/7VD3ME
   base_url: https://ssh.datastations.nl/api/datasets/export?exporter=OAI_ORE&persistentId=
 
 generate_keywords:
@@ -15,7 +18,7 @@ generate_keywords:
 
 match_keywords_to_terms:
   cosine_threshold: 0.8
-  matching_method: "top_n" # options: "closest" or "top_n"
+  matching_method: "closest" # options: "closest" or "top_n"
 
 prompts: 
   generate_keywords: |
@@ -24,8 +27,11 @@ prompts:
     Dataset description: {metadata}
 
 format_output: 
-  base_path : "data/output/{doi}_{method}_{cosine}.csv"  
-  output_mode: compact # options: "experimental" and "compact"
+  base_path_run_info : "data/output/run_info_{doi}.csv"  
+  base_path_keywords_aggregated: "data/output/aggregated_keywords_{method}.csv"
+  output_mode: experimental # options: "experimental" and "compact"
+
+
 
 
 embeddings:

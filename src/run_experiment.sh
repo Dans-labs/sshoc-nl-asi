@@ -12,15 +12,22 @@ DOI_FILE="data/dois_for_asi_test1.txt"
 
 # Make sure the file exists before we start
 if [[ ! -f "$DOI_FILE" ]]; then
-    echo "Error: DOI list file not found at '$DOI_FILE'" >&2
+    echo "Error: DOI list file not found at '$DOI_FILE'" 
     exit 1
 fi
+
+
+let COUNT=0
 
 # Iterate over each line (each DOI) in the file.
 # Using `while IFS= read -r` preserves whitespace and avoids word‑splitting.
 while IFS= read -r DOI; do
     # Skip empty lines (optional, but handy)
+
     [[ -z "$DOI" ]] && continue
+
+    let COUNT++
+    echo "Processing item #$COUNT"
 
     echo "Processing DOI: $DOI"
 
@@ -37,5 +44,9 @@ while IFS= read -r DOI; do
         echo "Finished processing DOI: $DOI"
     fi
 
-    sleep 2
-done < "$DOI_FILE"
+    # Every 8 items, pause for 5 minutes to avoid overloading services.
+    if (( COUNT % 6 == 0 )); then
+        echo "Pausing for 5 minutes to avoid overloading API..."
+        sleep 320
+    fi
+done < "$DOI_FILE"  

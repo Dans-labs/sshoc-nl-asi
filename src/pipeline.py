@@ -10,7 +10,7 @@ start = time.perf_counter()
 
 
 #from .tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms
-from src.tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
+from tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
 # Configure logging 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -29,7 +29,7 @@ def main():
     parser.add_argument(
         "--config", 
         type=str, 
-        default="src/configs/evaluation.yaml", 
+        default="src/configs/default.yaml", 
         help="Path to the configuration YAML file."
     )
     parser.add_argument(
@@ -39,11 +39,18 @@ def main():
     )
     args = parser.parse_args()
 
-    doi = args.doi
+
 
     # Load config 
     config = load_config(args.config)
     logging.info(f"Loaded configuration from {args.config}")
+
+    if args.doi:
+        doi = args.doi
+    else: 
+        doi = config["doi_to_md"]["doi"]
+        
+
 
     # Run tasks 
     logging.info("Starting pipeline...")
