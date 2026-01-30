@@ -46,11 +46,20 @@ The main advantage of using LLMs with zero or few shot learning is the lack of n
 
 
 ## Method
+
 The tool consists of two main components: 
 - Summarization of the dataset content in keywords by an LLM. 
 - Linking of the generated keywords to Getty AAT terms with embeddings and cosine similarity. 
 
- 
+### LLM 
+We found before that instructing an LLM to directly match dataset metadata with Getty AAT terms and the corresponding URI was not effective. Many generated terms and all URIs were hallucinated. However, 
+
+
+### Embeddings 
+Embeddings are machine-readable vector representations of text that encode semantic information. Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary.
+
+### Cosine similarity 
+> add formula, short explanation of how it works 
 
 
 ## Current status 
