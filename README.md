@@ -27,7 +27,7 @@ The tool uses the following technologies:
 - an LLM for the generation of keywords
 - Contextualized embeddings (SentenceBERT) to represent both the generated keywords and the vocabulary terms
 
-LLMs are useful approach for summarizing the contents of a dataset in keywords, but appear unsuitable for the task of linking those keywords to controlled vocabulary terms. For the entity linking part, a solution based on embedding representations is implemented. [Embedddings](https://en.wikipedia.org/wiki/Word_embedding) are machine-readable vector representations of text that encode semantic information. Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their most closest neighbor in the controlled vocabulary. 
+LLMs are useful approach for summarizing the contents of a dataset in keywords, but appear unsuitable for the task of linking those keywords to controlled vocabulary terms. For the entity linking part, a solution based on embedding representations is implemented. [Embedddings](https://en.wikipedia.org/wiki/Word_embedding) are machine-readable vector representations of text that encode semantic information. Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary. 
 
 ## Installation and Setup
 1. Make sure you have Python installed. 
