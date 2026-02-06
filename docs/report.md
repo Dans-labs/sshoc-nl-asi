@@ -8,7 +8,7 @@ This tool was created for SSHOC-NL deliverable 2025-D09, with the goal of automa
 
 ## Abstract
 - short task description 
-- reason why automation is important 
+- reason why semi-automation is important/useful 
 - setup overview 
 - what's new? 
 
@@ -26,12 +26,7 @@ For subject indexing by humans, the task is commonly characterized as three step
 
 Each step involves a reinterpretation of the result of the previous step. 
 
-
-
-
-> Automated subject indexing 
-
-> add part about suggestions / semi-automation  
+Manually adding subject terms to documents is time-consuming, especially for larger libraries or repositories. Automated Subject Indexing (ASI) addresses the problem of scale by (semi-)automatically enriching documents with subject terms. Tools for ASI are scarcely ever used to completely automatically add keywords to resources, mainly due to the subjectivity involved. Moreover, it has been difficult to find hard evidence of the success of fully automatic tools, as research and evaluation is often conducted in laboratory settings that do not consider the complexities of real-life systems (Golub, 2016). More commonly,  ASI tools provide suggestions that are then selected or rejected by human curators.  
 
 
 
@@ -87,6 +82,9 @@ Embeddings are machine-readable vector representations of text that encode seman
 ## Evaluation
 
 ## Current status 
+
+## Integration 
+What's needed?
 
 
 ## References 
