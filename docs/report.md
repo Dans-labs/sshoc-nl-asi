@@ -33,10 +33,8 @@ Manually adding subject terms to documents is time-consuming, especially for lar
 ## Background
 
 ### Approaches
-#### Statistical techniques
-Statistical (or classical machine-learning) approaches treat the task as a multi-label classification problem in which each document may be assigned any of the controlled vocabulary terms. The most common approach to ASI is the application of supervised machine learning algorithms (Golub, 2021). Such algorithms learn to extract patterns from large amounts of labeled data that can be generalized to a new set of unseen data. In the case of ASI, the training data would consist of datasets that have already been manually indexed. The algorithm would learn to make associations between the terms and dataset characteristics (e.g., frequently occurring words), which can be used to predict the most likely term of an new dataset. 
+Golub (2021) provides an overview of approaches to ASI, as well as important developments, examples from operative systems, and best practices. Most of the information in the sections below is based on their work.  
 
-Supervised machine learning only works when large amounts of labeled training data are present, because the algorithm needs enough evidence to distinguish between each possible label. The minimal number of annotations per class that is required for reliable prediction by supervised machine learning depends on the task and algorithm. Golub et al. (2020) found that supervised classification for ASI only worked well with classes that have over 1000 training documents. This challenge is not easily overcome by libraries or repositories, as controlled vocabularies can be large, and the manually indexed datasets may not cover all of them. The Getty AAT, for instance, has over 500.000 terms, so a repository must house roughly 500 million datasets to yield sufficient training data (while also making the unlikely assumption that each term is equally distributed over the datasets). In short, supervised machine learning approaches to ASI are better suited for smaller controlled vocabularies for which sufficient training data can be more easily obtained. 
 
 #### Lexical techniques 
 Lexical approaches treat the indexing problem as a term-lookup task. After preprocessing the record’s description, the system compares it directly with the terms of the controlled vocabulary.  
@@ -51,28 +49,68 @@ The resulting documents could already be used to match against the controlled vo
 When exact/verbatim matches are rare, it can be useful to use TF-IDF weighted cosine similarity. This approach represents both the descriptions and term definitions as sparse vectors with weights that represent their information value. TF-IDF representations take into account how often a token appears in the document at hand, and how often it appears in the other documents of the collection. The weight can be seen as an indication of how well the corresponding token contributes to the overall topic of the document. Similarity measures like cosine similarity can compare the vectors and retrieve the terms that are most similar to the description.  
 
 
+#### Statistical techniques
+Statistical (or classical machine-learning) approaches treat the task as a multi-label classification problem in which each document may be assigned any of the controlled vocabulary terms. The most common approach to ASI is the application of supervised machine learning algorithms (Golub, 2021). Such algorithms learn to extract patterns from large amounts of labeled data that can be generalized to a new set of unseen data. In the case of ASI, the training data would consist of datasets that have already been manually indexed. The algorithm would learn to make associations between the terms and dataset characteristics (e.g., frequently occurring words), which can be used to predict the most likely term of an new dataset. 
+
+Supervised machine learning only works when large amounts of labeled training data are present, because the algorithm needs enough evidence to distinguish between each possible label. The minimal number of annotations per class that is required for reliable prediction by supervised machine learning depends on the task and algorithm. Golub (2021) found that supervised classification for ASI only worked well with classes that have over 1000 training documents. This challenge is not easily overcome by libraries or repositories, as controlled vocabularies can be large, and the manually indexed datasets may not cover all of them. The Getty AAT, for instance, has over 500.000 terms, so a repository must house roughly 500 million datasets to yield sufficient training data (while also making the unlikely assumption that each term is equally distributed over the datasets). In short, supervised machine learning approaches to ASI are better suited for smaller controlled vocabularies for which sufficient training data can be more easily obtained. 
+
+
+
+
 #### Large Language Models (LMMs)
 LLMs are statistical models that have evolved from classic machine learning, and are trained on vast amounts of language data. While in essence LLMs are trained to predict the next word in a sequence, they can successfully be applied to carry out most natural language processing tasks. It is possible to interact with an LLM using natural language, so designing your prompt in which you describe the task is essential.  
 
-The main advantage of using LLMs with zero or few shot learning is the lack of need for extensive training data. The main downsides are that the output is nondeterministic; it may give varying answers when given the same prompt multiple times. Moreover, LLMs tend to hallucinate and make up terms that are not in the vocabularies, even when explicitly instructed to only stick to the vocabulary terms. Relatedly, in a small explorative experiment, we found that the LLMs we used consistently failed at linking the generated terms to their URIs. Even if a valid Getty AAT term was generated, the corresponding URI would not be valid and link either to a different term, or no term at all. Zhang et al., 2023 found that transfer learning works well for smaller vocabularies that can be included verbatim in the input prompt. 
+The main advantage of using LLMs with zero or few shot learning is the lack of need for extensive training data. The main downsides are that the output is nondeterministic; it may give varying answers when given the same prompt multiple times. Moreover, LLMs tend to hallucinate and make up terms that are not in the vocabularies, even when explicitly instructed to only stick to the vocabulary terms. Relatedly, in a small explorative experiment, we found that the LLMs we used consistently failed at linking the generated terms to their URIs. Even if a valid Getty AAT term was generated, the corresponding URI would not be valid and link either to a different term, or no term at all. Zhang et al., (2023) found that transfer learning works well for smaller vocabularies that can be included verbatim in the input prompt. 
 
-
-### Mixed methods 
-- In practice, a mix of approaches is often implemented. 
-
-
-## System setup
-
-The tool consists of two main components: 
-- Summarization of the dataset content in keywords by an LLM. 
-- Linking of the generated keywords to Getty AAT terms with embeddings and cosine similarity. 
-
-### LLM 
-We found before that instructing an LLM to directly match dataset metadata with Getty AAT terms and the corresponding URI was not effective. Many generated terms and all URIs were hallucinated. However, 
+Note that in practice, a combination of approaches is often implemented. 
 
 
 ### Embeddings 
-Embeddings are machine-readable vector representations of text that encode semantic information. Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary.
+We use embedding representations to retrieve the controlled vocabulary terms that match with the generated keywords. This section provides some background on how embeddings work.  
+
+Embeddings are machine-readable vector representations of texts that encode semantic information. Embeddings are based on the distributional hypothesis, which states that words that occur in similar contexts tend to have similar meanings. The difference in meaning between words can in this way be captured by measuring the difference in their environment. Similarly, the different senses of polysemous words (words with the same form but different meanings), can be distinguished by contextualized embeddings. 
+
+Based on the assumption that the meaning of words can be derived
+from their neighboring words, word embeddings represent words as vectors that map them to a point in a multidimensional semantic space, where numbers in the vector represent coordinates in the vector space. The values of the vectors are commonly learned by neural networks trained on large amounts of text that obtain the representation based on the frequency distributions of words and its neighbors. This results in clusters where words in close proximity of each other occur in similar contexts, and are thus semantically similar. Reversely, a large distance between two words indicates a high dissimilarity. 
+
+A common way to illustrate the semantic power of embeddings is using arithmetic operations on vectors to finish analogies. Analogies are statements that take the form of “a is to b as x is to y”. In the analogy “France is to Paris as Italy is to x ”, x can be calculated by subtracting the vectors of France and Italy, and adding the vector of Paris. This will result in the vector of Rome. Embedding models are not trained on this property, they are inherent to the way word vectors are designed. 
+
+## System setup
+
+### Overview
+The tool takes a dataset DOI as input and extracts some metadata (currently the title and description). It proceeds to create term suggestions with the following two main components: 
+
+> 1. Summarization of the dataset content in keywords by an LLM. 
+> 2. Linking of the generated keywords to Getty AAT terms with embeddings and cosine similarity. 
+
+When looking at the steps that are typically involved in subject indexing as outlined in the [Task Description section](#task-description) above, the LLM in our system performs the first two steps (determining and formulating the subject matter of the document), and the second component carries out the last step (translating the subject matter into the indexing language). 
+
+The indexing language in our case is a slim version of the [Getty Art and Architecture Thesaurus](https://www.getty.edu/research/tools/vocabularies/aat/) (AAT). This vocabulary is already in use in the DANS Data Stations. See below on more information about the Getty version that we use.  
+
+### LLM 
+We found earlier that instructing an LLM to directly match dataset metadata with Getty AAT terms and the corresponding URI was not effective. Many generated terms and all URIs were hallucinated. However, the keywords that were generated to summarize the dataset looked fitting. 
+
+The model we used for the first iteration of experiments was [gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) which was accessed with the Huggingface API.
+
+We formulated the input prompt as follows: 
+
+> **Instruction**: Select up to 10 terms from the Getty AAT (https://vocab.getty.edu/aat/) that summarize the contents of the dataset description below. Only choose terms that are present in the AAT. \
+**Format**: Please format your output as follows: 'name_term_1, name_term_2, name_term_3, name_term_4, name_term_5' \
+**Dataset description**: {metadata}
+
+Our aim was to minimize the number of input tokens necessary to inform the LLM on the task and generate the keywords, which is why we chose to not include examples in the prompt. Note that the explicit instruction to only use vocabulary terms was not always followed. 
+
+
+
+### Embeddings 
+Embeddings are machine-readable vector representations of text that encode semantic information. Embeddings are based on the distributional hypothesis, which states that words that occur in similar contexts tend to have similar meanings. The difference in meaning between words can in this way be captured by measuring the difference in their environment. Similarly, the different senses of polysemous words (words with the same form but different meanings), can be distinguished by contextualized embeddings. 
+
+Based on the assumption that the meaning of words can be derived
+from their neighboring words, word embeddings represent words as vectors that map them to a point in a multidimensional semantic space, where numbers in the vector represent coordinates in the vector space. The values of the vectors are commonly learned by neural networks trained on large amounts of text that obtain the representation based on the frequency distributions of words and its neighbors. This results in clusters where words in close proximity of each other occur in similar contexts, and are thus semantically similar. Reversely, a large distance between two words indicates a high dissimilarity. 
+
+A common way to illustrate the semantic power of embeddings is using arithmetic operations on vectors to finish analogies. Analogies are statements that take the form of “a is to b as x is to y”. In the analogy “France is to Paris as Italy is to x ”, x can be calculated by subtracting the vectors of France and Italy, and adding the vector of Paris. This will result in the vector of Rome. Embedding models are not trained on this property, they are inherent to the way word vectors are designed. 
+
+Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary.
 
 ### Cosine similarity 
 > add formula, short explanation of how it works 
