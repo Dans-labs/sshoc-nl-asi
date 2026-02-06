@@ -1,6 +1,7 @@
 # Report on Automated Subject Indexing (ASI)
 Author: Alessandra Polimeno \
-Date: February 06 2026
+Date: February 06 2026 \
+[Github repo](https://github.com/Dans-labs/sshoc-nl-asi/tree/main)
 
 ## Project background 
 This tool was created for SSHOC-NL deliverable 2025-D09, with the goal of automatically suggesting Getty AAT terms as keywords for datasets in the SSH Data Station. The tool outputs a number of controlled vocabulary terms based on the dataset title and description that match the dataset's topic. This task is referred to as Automated Subject Indexing (ASI). 
@@ -78,7 +79,7 @@ A common way to illustrate the semantic power of embeddings is using arithmetic 
 ## System setup
 
 ### Overview
-The tool takes a dataset DOI as input and extracts some metadata (currently the title and description). It proceeds to create term suggestions with the following two main components: 
+Our tool takes a dataset DOI as input and extracts some metadata (currently the title and description). It proceeds to create term suggestions with the following two main components: 
 
 > 1. Summarization of the dataset content in keywords by an LLM. 
 > 2. Linking of the generated keywords to Getty AAT terms with embeddings and cosine similarity. 
@@ -86,6 +87,9 @@ The tool takes a dataset DOI as input and extracts some metadata (currently the 
 When looking at the steps that are typically involved in subject indexing as outlined in the [Task Description section](#task-description) above, the LLM in our system performs the first two steps (determining and formulating the subject matter of the document), and the second component carries out the last step (translating the subject matter into the indexing language). 
 
 The indexing language in our case is a slim version of the [Getty Art and Architecture Thesaurus](https://www.getty.edu/research/tools/vocabularies/aat/) (AAT). This vocabulary is already in use in the DANS Data Stations. See below on more information about the Getty version that we use.  
+
+
+>TO DO: VISUALIZATION OF SYSTEM 
 
 ### LLM 
 We found earlier that instructing an LLM to directly match dataset metadata with Getty AAT terms and the corresponding URI was not effective. Many generated terms and all URIs were hallucinated. However, the keywords that were generated to summarize the dataset looked fitting. 
@@ -100,22 +104,24 @@ We formulated the input prompt as follows:
 
 Our aim was to minimize the number of input tokens necessary to inform the LLM on the task and generate the keywords, which is why we chose to not include examples in the prompt. Note that the explicit instruction to only use vocabulary terms was not always followed. 
 
+We currently have not specified the desired language of the terms in the prompt, but when testing and evaluating we found that the generated keywords were always in English, probably due to the prompt being in English but despite the metadata being predominantly Dutch. For robustness we could include a language specification in the prompt. 
 
 
 ### Embeddings 
-Embeddings are machine-readable vector representations of text that encode semantic information. Embeddings are based on the distributional hypothesis, which states that words that occur in similar contexts tend to have similar meanings. The difference in meaning between words can in this way be captured by measuring the difference in their environment. Similarly, the different senses of polysemous words (words with the same form but different meanings), can be distinguished by contextualized embeddings. 
+While LLMs appeared suitable for summarizing the subject of a dataset, the method consistently failed at producing the corresponding vocabulary term and its URI. We solved this problem by representing both the controlled vocabulary terms and the generated keywords as embeddings, and retrieving the vocabulary term with the highest similarity to each generated keyword. The similarity between two embedding representations can easily be determined with the cosine similarity measure. 
 
-Based on the assumption that the meaning of words can be derived
-from their neighboring words, word embeddings represent words as vectors that map them to a point in a multidimensional semantic space, where numbers in the vector represent coordinates in the vector space. The values of the vectors are commonly learned by neural networks trained on large amounts of text that obtain the representation based on the frequency distributions of words and its neighbors. This results in clusters where words in close proximity of each other occur in similar contexts, and are thus semantically similar. Reversely, a large distance between two words indicates a high dissimilarity. 
+Cosine similarity measures how closely two embedding vectors point in the same direction: it computes the cosine of the angle between them, giving a value from –1 (opposite) to 1 (identical). In practice, words with similar meanings end up with vectors that form a small angle, so their cosine similarity is close to 1, indicating they’re semantically related. 
 
-A common way to illustrate the semantic power of embeddings is using arithmetic operations on vectors to finish analogies. Analogies are statements that take the form of “a is to b as x is to y”. In the analogy “France is to Paris as Italy is to x ”, x can be calculated by subtracting the vectors of France and Italy, and adding the vector of Paris. This will result in the vector of Rome. Embedding models are not trained on this property, they are inherent to the way word vectors are designed. 
+By retrieving the embedding representation of the AAT term that is most similar to the embedding representation of a generated keyword, we created a list of suggestions. We only selected term-keyword pairs with a cosine higher than 0.7. A setting is implemented that allows you to choose for either only the single most similar term for each keyword, or the top n most similar keywords. 
 
-Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary.
+The embeddings model 
 
-### Cosine similarity 
-> add formula, short explanation of how it works 
 
-### The Getty AAT 
+### The AAT Concepts
+We use a slim version of the Getty Art and Architecture Thesausus that was created to address size issues and easier use in the DANS Data Stations. This version is called the [Art and Architecture Thesaurus Concepts](https://zenodo.org/records/15487726) (AATC) and is a trimmed-down version of the original thesaurus, focused only on concepts (rather than hierarchy names), containing a simplified schema for language labels, only in English and Dutch, and relinquish the hierarchy in favor of a flat list of concepts. It is a SKOS concept scheme that can be browsed [here](https://vocabs.datastations.nl/AATC/en/). 
+
+The AAT Concepts contains considerably fewer terms as it only takes the concepts, and Dutch and English labels, resulting in 55741 concepts. The ASI tool represents these concepts as contextualized embeddings with the same model as the generated keywords (namely Sentence-BERT). 
+
 
 ## Evaluation
 
