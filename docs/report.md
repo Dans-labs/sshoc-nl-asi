@@ -146,13 +146,13 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 
 
 
-|  | correct | incorrect | 
+|  | correct | incorrect     | 
 | --- | --- | --- | 
 **coder 1** | 214 (75%) | 73 (25%) | 
 **coder 2** | 270 (94%)  |  16 (6%) | 
 **coder 3** | 245 (86%)|  38 (14%)        |
 
-*Table 1: Evaluation results for the linking between generated keywords and AATC terms.*
+*Table 1: Evaluation results for the **linking** between generated keywords and AATC terms.*
 
 
 |  | acceptable | unacceptable | 
@@ -161,7 +161,7 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 **coder 2** |  269 (95%)| 14(5%) | 
 **coder 3**| 222 (80%) | 56 (20%) | 
 
-*Table 2: Evaluation results for the relevance of the suggested AATC terms.*
+*Table 2: Evaluation results for the **relevance** of the suggested AATC terms.*
 
 
 |  | OK | missing | too generic | 
@@ -170,7 +170,7 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 **coder 2** | 27  | 28  | 5  | 
 **coder 3** |  22 | -  | -  | 
 
-*Table 3: Evaluation results for the overall quality of the suggested AATC terms on dataset level.*
+*Table 3: Evaluation results for the **overall quality** of the suggested AATC terms on dataset level.*
 
 
 ### Discussion
