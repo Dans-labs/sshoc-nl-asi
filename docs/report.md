@@ -8,12 +8,20 @@ This tool was created for SSHOC-NL deliverable 2025-D09, with the goal of automa
 
 
 ## Abstract
-- short task description 
-- reason why semi-automation is important/useful 
-- setup overview 
-- what's new?
-  - Very large vocabulary, cannot be included in the prompt 
-  - relatively lightweight 
+
+The Automated Subject Indexing (ASI) pilot explores the development of scalable, semi‑automatic generation of Getty Art & Architecture Thesaurus (AAT) keywords for datasets in the DANS Data Station Social Sciences and Humanities. Manual subject indexing is labor intensive and inherently subjective, making a fully automated solution impractical, especially given the very large AAT vocabulary that cannot be accommodated within a prompt.
+
+Our lightweight pipeline consists of two components:
+
+- LLM‑driven keyword summarization: an LLM receives only the dataset title and description and returns up to ten keywords that capture the core subject matter.
+- Embedding‑based term linking: the generated keywords and the trimmed AAT Concepts (AATC) list (55741 terms) are encoded with Sentence‑BERT (all‑MiniLM‑L6‑v2). Cosine similarity retrieves the most semantically aligned AATC term for each keyword, retaining matches with a similarity score ≥ 0.7.
+
+By delegating the first two indexing steps (subject determination and formulation) to the LLM and the final translation step to the embedding matcher, the system circumvents the LLM’s tendency to hallucinate URIs while preserving the benefits of zero‑shot generation (no large labelled training set is required).
+
+An expert evaluation on a stratified sample of 60 datasets showed that between 80% and 95% of the suggested AATC terms were judged acceptable, although annotators noted occasional missing or overly generic concepts. The results indicate that a semi‑automated ASI workflow can be used to suggest relevant controlled vocabulary terms, making it easy for depositors to enrich their metadata with keywords, thus increasing the findability of their dataset. 
+
+
+## Objectives 
 
 
 
@@ -115,7 +123,7 @@ While LLMs appeared suitable for summarizing the subject of a dataset, the metho
 
 Cosine similarity measures how closely two embedding vectors point in the same direction: it computes the cosine of the angle between them, giving a value from –1 (opposite) to 1 (identical). In practice, words with similar meanings end up with vectors that form a small angle, so their cosine similarity is close to 1, indicating they’re semantically related. 
 
-By retrieving the embedding representation of the AAT term that is most similar to the embedding representation of a generated keyword, we created a list of suggestions. We only selected term-keyword pairs with a cosine higher than 0.7. A setting is implemented that allows you to choose for either only the single most similar term for each keyword, or the top n most similar keywords. 
+By retrieving the embedding representation of the AAT term that is most similar to the embedding representation of a generated keyword, we created a list of suggestions. We only selected term-keyword pairs with a cosine higher than 0.7. A setting is implemented that allows you to choose for either only the single most similar term for each keyword, or the top n most similar keywords. In the evaluation described below, the setting that selects the single most similar term was used. 
 
 The embeddings model that the tool currently uses is [Sentence-BERT](https://www.sbert.net/) (SBERT), specifically `all-MiniLM-L6-v2` via [Huggingface](https://huggingface.co/sentence-transformers/multi-qa-MiniLM-L6-cos-v1). 
 
@@ -172,6 +180,8 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 
 *Table 3: Evaluation results for the **overall quality** of the suggested AATC terms on dataset level.*
 
+
+> add short error analysis, or summary of what often went wrong (like inclusion of metadata term, etc)
 
 ### Discussion
 (Preliminary for now as more annotations may come in)
