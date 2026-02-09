@@ -166,7 +166,7 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 |  | acceptable | unacceptable | 
 | --- | --- | --- | 
 **coder 1** | 254 (89%) | 33 (11%) | 
-**coder 2** |  269 (95%)| 14(5%) | 
+**coder 2** |  269 (95%)| 14 (5%) | 
 **coder 3**| 222 (80%) | 56 (20%) | 
 
 *Table 2: Evaluation results for the **relevance** of the suggested AATC terms.*
