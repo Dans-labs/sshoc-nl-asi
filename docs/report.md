@@ -146,7 +146,7 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 
 
 
-|  | right | wrong | 
+|  | correct | incorrect | 
 | --- | --- | --- | 
 **coder 1** | 214 (75%) | 73 (25%) | 
 **coder 2** | 270 (94%)  |  16 (6%) | 
