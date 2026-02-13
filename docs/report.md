@@ -194,7 +194,7 @@ On dataset level, the suggested keywords did not always manage to cover the full
 Given that the tool should only be used to make term suggestions to depositors, not a fully automatic labeling system, it is most important that the suggestions are relevant, not necessarily complete. If a depositor can easily select a number of terms that capture the dataset's subject, they may also be inclined to add terms that the tool missed. Even if they stick to the suggestions, any metadata enrichment adds value to a dataset and adds to its findability. 
 
 ## Integration requirements
-What's needed?
+(to be added)
 
 
 
