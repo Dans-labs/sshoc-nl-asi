@@ -4,29 +4,26 @@ Date: February 06 2026 \
 [Github repo](https://github.com/Dans-labs/sshoc-nl-asi/tree/main)
 
 ## Project background 
-This tool was created for SSHOC-NL deliverable 2025-D09, with the goal of automatically suggesting Getty AAT terms as keywords for datasets in the SSH Data Station. The tool outputs a number of controlled vocabulary terms based on the dataset title and description that match the dataset's topic. This task is referred to as Automated Subject Indexing (ASI). 
+This tool was created for SSHOC-NL deliverable 2025-D09, with the goal of automatically suggesting Getty AAT terms as keywords for datasets in the [DANS Data Station Social Sciences and Humanities](https://ssh.datastations.nl/) (SSH). The tool outputs a number of controlled vocabulary terms based on the dataset title and description that match the dataset's topic. This task is referred to as Automated Subject Indexing (ASI). 
 
 
 ## Abstract
 
-The Automated Subject Indexing (ASI) pilot explores the development of scalable, semi‑automatic generation of Getty Art & Architecture Thesaurus (AAT) keywords for datasets in the DANS Data Station Social Sciences and Humanities. Manual subject indexing is labor intensive and inherently subjective, making a fully automated solution impractical, especially given the very large AAT vocabulary that cannot be accommodated within a prompt.
+The Automated Subject Indexing (ASI) pilot explores the development of scalable, semi‑automatic generation of Getty Art & Architecture Thesaurus (AAT) keywords for datasets in the DANS Data Station Social Sciences and Humanities. Manual subject indexing is labor intensive and requires skill and familiarity with a thesaurus, which many depositors might not possess. By providing term suggestions during the depositing process, we hope to encourage depositors to enrich their metadata. 
 
-Our lightweight pipeline consists of two components:
+Our pipeline consists of two components:
 
 - LLM‑driven keyword summarization: an LLM receives only the dataset title and description and returns up to ten keywords that capture the core subject matter.
-- Embedding‑based term linking: the generated keywords and the trimmed AAT Concepts (AATC) list are encoded with Sentence‑BERT. Cosine similarity retrieves the most semantically aligned AATC term for each keyword, retaining matches with a similarity score > 0.7.
+- Embedding‑based term linking: the generated keywords and the trimmed AAT Concepts (AATC) list are encoded with Sentence‑BERT. Cosine similarity retrieves the most semantically aligned AATC term for each keyword. 
 
-By delegating the first two indexing steps (subject determination and formulation) to the LLM and the final translation step to the embedding linker, the system circumvents the LLM’s tendency to hallucinate URIs while preserving the benefits of zero‑shot generation (no large labelled training set is required).
+By delegating the first two indexing steps (subject determination and formulation) to the LLM and the final translation step to the embedding-based linker, the system circumvents the LLM’s tendency to hallucinate URIs while preserving the benefits of zero‑shot generation (meaning no large labelled training set is required).
 
 An expert evaluation on a stratified sample of 60 datasets showed that between 80% and 95% of the suggested AATC terms were judged acceptable, although annotators noted occasional missing or overly generic concepts. The results indicate that a semi‑automated ASI workflow can be used to suggest relevant controlled vocabulary terms, making it easy for depositors to enrich their metadata with keywords, thus increasing the findability of their dataset. 
 
 
-## Objectives 
-
-
 
 ## Task description 
-The task of subject indexing aims to facilitate findability of digital resources by providing keywords that describe the subject of the resource. The keywords are terms from a controlled vocabulary or thesaurus. With the help of the keywords, a user can retrieve relevant documents for the topic they are researching. What makes this task complex is the fact that relevance is subjective, and differs between people or can change over time for the same person. The perspective from which a user wants to retrieve a document cannot be fully predicted, and subject indeces are incomplete by default (Golub, 2016). 
+The task of subject indexing aims to facilitate findability of digital resources by providing keywords that describe the subject of the resource. The keywords are terms from a controlled vocabulary or thesaurus. With the help of the keywords, a user can retrieve relevant documents for the topic they are researching. What makes this task complex is the fact that relevance is subjective, and differs between people or can change over time for the same person. The perspective from which a user wants to retrieve a document cannot be fully predicted, so subject indeces are incomplete by default (Golub, 2016). 
 
 The process of subject indexing itself is subjective in nature, too. The terms an indexer comes up with do not form a neutral and objective representation of what a resource is about, but rather the representation of an interpretation of the resource made by the indexer. The result is influenced by both the social and cultural context of the indexer (Mai, 2001). The subjective nature of the task should be kept in mind when thinking about how to perform it computationally, as there is no finite set of correct labels for a given document that should be aimed at. Moreover, it complicates the evaluation process because no gold standard can be assumed, and evaluation should combine quantitative and qualitative methods (Golub, 2016). 
 
@@ -90,12 +87,12 @@ A common way to illustrate the semantic power of embeddings is using arithmetic 
 ## System setup
 
 ### Overview
-Our tool takes a dataset DOI as input and extracts some metadata (currently the title and description). It proceeds to create term suggestions with the following two main components: 
+We created a command line tool that takes one or more dataset DOIs as input and extracts some metadata (currently the title and description). It proceeds to create term suggestions with the following two main components: 
 
-> 1. Summarization of the dataset content in keywords by an LLM. 
+> 1. Summarization of the dataset subject matter in natural language keywords by an LLM. 
 > 2. Linking of the generated keywords to Getty AAT terms with embeddings and cosine similarity. 
 
-When looking at the steps that are typically involved in subject indexing as outlined in the [Task Description section](#task-description) above, the LLM in our system performs the first two steps (determining and formulating the subject matter of the document), and the second component carries out the last step (translating the subject matter into the indexing language). 
+When looking at the steps that are typically involved in subject indexing as outlined in the [Task Description section](#task-description) above, the LLM in our system performs the first two steps (determining and formulating the subject matter of the document), and the embedding-based linker carries out the last step (translating the subject matter into the indexing language). 
 
 The indexing language in our case is a slim version of the [Getty Art and Architecture Thesaurus](https://www.getty.edu/research/tools/vocabularies/aat/) (AAT). This vocabulary is already in use in the DANS Data Stations. See below on more information about the Getty version that we use.  
 
@@ -103,17 +100,19 @@ The indexing language in our case is a slim version of the [Getty Art and Archit
 >TO DO: VISUALIZATION OF SYSTEM 
 
 ### LLM 
-We found earlier that instructing an LLM to directly match dataset metadata with Getty AAT terms and the corresponding URI was not effective. Many generated terms and all URIs were hallucinated. However, the keywords that were generated to summarize the dataset looked fitting. 
+We found earlier that instructing an LLM to directly match dataset metadata with Getty AAT terms and the corresponding URI was not effective. Many generated terms and all URIs were hallucinated and linked to either non-existent webpages or landing pages of unrelated terms. However, the keywords that were generated by the LLM summarized the content of the dataset quite accurately. 
 
 The model we used for the first iteration of experiments was [gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) which was accessed with the Huggingface API. If this tool gets integrated into the DANS Data Stations, it should work with a local LLM hosted on DANS servers, or an LLM that is developed by a trusted institute such as [SURF](https://www.surf.nl/en).  
 
-We formulated the input prompt as follows: 
+The imput prompt was formulated as follows: 
 
 > **Instruction**: Select up to 10 terms from the Getty AAT (https://vocab.getty.edu/aat/) that summarize the contents of the dataset description below. Only choose terms that are present in the AAT. \
 **Format**: Please format your output as follows: 'name_term_1, name_term_2, name_term_3, name_term_4, name_term_5' \
 **Dataset description**: {metadata}
 
-Our aim was to minimize the number of input tokens necessary to inform the LLM on the task and generate the keywords, which is why we chose to not include examples in the prompt. Note that the explicit instruction to only use vocabulary terms was not always followed. 
+Our aim was to minimize the number of input tokens necessary to inform the LLM on the task and generate the keywords as to minimize the processing power required to run the prompt, which is why we chose to not include examples. 
+
+Note that the explicit instruction to only use vocabulary terms was not always followed. 
 
 We currently have not specified the desired language of the terms in the prompt, but when testing and evaluating we found that the generated keywords were always in English, probably due to the prompt being in English but despite the metadata being predominantly Dutch. For robustness we could include a language specification in the prompt. 
 
@@ -150,6 +149,8 @@ Our annotation guidelines included the following information for each of the var
   - Does the set of AATC terms sufficiently describe the dataset as a whole? Is there a term you are missing? Are the terms too generic to capture the subject?  
  
 
+
+### Results
 Tables 1-3 display the results of the evaluation. Keep in mind that large differences between assessments by different people are normal for the task given its subjective nature (Golub, 2021). The total number of annotated pairs may vary slightly between annotators as they sometimes indicated a third ambiguous option that is not included in the table due to inconsistencies.  
 
 
@@ -181,15 +182,14 @@ Tables 1-3 display the results of the evaluation. Keep in mind that large differ
 *Table 3: Evaluation results for the **overall quality** of the suggested AATC terms on dataset level.*
 
 
-> add short error analysis, or summary of what often went wrong (like inclusion of metadata term, etc)
+
 
 ### Discussion
-(Preliminary for now as more annotations may come in)
-- Overall, it can be said that the relevance of the terms generated by the tool is quite high (see Table 2). 
-- For many datasets the annotators identified missing terms. 
-- Given that the tool should be used to make suggestions to depositors, it is most important that the suggestions are relevant. If the tool were to suggest many irrelevant terms it would be unusable.   
+Overall, the relevance of the individual terms that are suggested by the ASI tool are quite high (see Table 2). This means that the annotators found the suggestions to fit the subject matter of the datasets. 
 
+On dataset level, the suggested keywords did not always manage to cover the full subject matter, as the annotators often indicated that an important term was missing. 
 
+Given that the tool should only be used to make term suggestions to depositors, not a fully automatic labeling system, it is most important that the suggestions are relevant, not necessarily complete. If a depositor can easily select a number of terms that capture the dataset's subject, they may also be inclined to add terms that the tool missed. Even if they stick to the suggestions, any metadata enrichment adds value to a dataset and adds to its findability. 
 
 ## Integration requirements
 What's needed?
@@ -203,4 +203,6 @@ What's needed?
 Swedish Metadata Using Dewey Decimal Classification: A Comparison of Approaches,”
 Journal of Data and Information Science 5, no. 1 (2020): 18, https://doi.org/10.2478/jdis-2020-0003
 - Mai, J. E. (2001). Semiotics and indexing: an analysis of the subject indexing process. Journal of documentation, 57(5), 591-622, https://doi.org/10.1108/EUM0000000007095
-- Zhang, S., Wu, M., & Zhang, X. (2023). Utilising a large language model to annotate subject metadata: A case study in an Australian national research data catalogue. 
+- Zhang, S., Wu, M., & Zhang, X. (2023). Utilising a large language model to annotate subject metadata: A case study in an Australian national research data catalogue.   
+https://doi.org/10.48550/arXiv.2310.11318
+
